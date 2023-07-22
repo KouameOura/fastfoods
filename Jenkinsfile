@@ -40,7 +40,7 @@ pipeline {
         stage('Check Quality Gate') {
             steps {
                 echo 'Checking quality gate...'
-                dir('./fastfood_backend/'){ 
+                dir('./fastfood_BackEnd/'){ 
                     script {
                     timeout(time: 20, unit: 'MINUTES') {
                         def qg = waitForQualityGate()
