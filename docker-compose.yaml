@@ -1,0 +1,16 @@
+version: '3'
+services:
+  fastfood_backend:
+    build: ./fastfood_backend
+    container_name: fastfood_backend
+    ports:
+      - 8094:8094
+
+
+  fastfood_frontend:
+    build: ./fastfood_frontend
+    container_name: fastfood_frontend
+    ports:
+      - 4200:4200
+    links:
+      - fastfood_backend

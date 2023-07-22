@@ -1,0 +1,58 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: food-backend
+  labels:
+    name: food-backend
+spec:
+  ports:
+    - nodePort: 30163
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: food-backend
+  type: NodePort
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: food-backend
+spec:
+  selector:
+    matchLabels:
+      app: food-backend
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: food-backend
+    spec:
+      containers:
+        - name: food-backend
+          image: 076892551558.dkr.ecr.us-east-1.amazonaws.com/food-backend:latest
+          ports:
+            - containerPort: 8080
+          env:   # Setting Enviornmental Variables
+            - name: DB_HOST   # Setting Database host address from configMap
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-conf  # name of configMap
+                  key: host
+            - name: DB_NAME  # Setting Database name from configMap
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-conf
+                  key: name
+            - name: POSTGRES_USER  # Setting Database username from Secret
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials # Secret Name
+                  key: postgres_user
+            - name: POSTGRES_PASSWORD # Setting Database password from Secret
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: postgres_password
+

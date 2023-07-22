@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fast-food-backend-app
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: fast-food-backend-app
+  replicas: 3
+  template:
+    metadata:
+      name: fast-food-backend-app
+      labels:
+        app: fast-food-backend-app
+    spec:
+      containers:
+      - name: fast-food-backend-app
+        env:
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                 name: postgres-credentials
+                 key: postgres_user
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                 name: postgres-credentials
+                 key: postgres_password
+          - name: POSTGRES_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-conf
+                key: postgres
+        image: 076892551558.dkr.ecr.us-east-1.amazonaws.com/food-backend:latest
