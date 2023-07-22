@@ -31,7 +31,7 @@ pipeline {
             steps {
                 dir('./fastfood_backend/'){
                     withSonarQubeEnv('SonarServer') {
-                        sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=KouameOura_fastfoods'
+                        sh 'mvn sonar:sonar -Dsonar.projectKey=KouameOura_fastfoods -Dsonar.java.binaries=.'
                     }
                 }
             }
