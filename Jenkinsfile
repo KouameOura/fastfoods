@@ -10,7 +10,7 @@ pipeline {
    environment {
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
-        NEXUS_URL = "139.177.192.139:8081"
+        NEXUS_URL = "170.187.156.189:8081"
         NEXUS_REPOSITORY = "utrains-nexus-pipeline"
         NEXUS_CREDENTIAL_ID = "nexus-user-credentials"
 
@@ -56,7 +56,7 @@ pipeline {
          stage("Maven Build Back-End") {
             steps {
                 echo 'Build Back-End Project...'
-                dir('./fastfood_backend/'){
+                dir('./fastfood_BackEnd/'){
                     script {
                     sh "mvn package -DskipTests=true"
                     }
@@ -67,7 +67,7 @@ pipeline {
          stage("Publish to Nexus Repository Manager") {
             steps {
                 echo 'Publish to Nexus Repository Manager...'
-                dir('./fastfood_backend/'){
+                dir('./fastfood_BackEnd/'){
                     script {
                     pom = readMavenPom file: "pom.xml";
                     filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
