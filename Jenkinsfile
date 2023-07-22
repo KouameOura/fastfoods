@@ -29,7 +29,7 @@ pipeline {
 
         stage("build & SonarQube analysis") {          
             steps {
-                dir('./fastfood_backend/'){
+                dir('./fastfood_BackEnd/'){
                     withSonarQubeEnv('SonarServer') {
                         sh 'mvn sonar:sonar -Dsonar.projectKey=KouameOura_fastfoods -Dsonar.java.binaries=.'
                     }
