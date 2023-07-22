@@ -14,10 +14,10 @@ pipeline {
         NEXUS_REPOSITORY = "utrains-nexus-pipeline"
         NEXUS_CREDENTIAL_ID = "nexus-user-credentials"
 
-        imageName = "fastfood"
-        registryCredentials = "nexus-user-credentials"
-        registry = "139.177.192.139:8085/repository/utrains-nexus-registry/"
-        dockerImage = ''
+        // imageName = "fastfood"
+        // registryCredentials = "nexus-user-credentials"
+        // registry = "139.177.192.139:8085/repository/utrains-nexus-registry/"
+        // dockerImage = ''
 
         //Declare the variable version
         POM_VERSION = ''
@@ -37,7 +37,7 @@ pipeline {
             }
         }
 
-        stage('Check Quality Gate') {
+        stage("Check Quality Gate") {
             steps {
                 echo 'Checking quality gate...'
                 dir('./fastfood_BackEnd/'){ 
