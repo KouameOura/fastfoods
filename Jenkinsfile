@@ -135,20 +135,37 @@ pipeline {
         }
 
         //Helm Chart push as tgz file
+        // stage("pushing the helm charts to nexus"){
+        //     steps{
+        //         script{
+        //             withCredentials([string(credentialsId: 'nexus-pass', variable: 'docker_password')]) {
+        //                   dir('fastfood_BackEnd/') {
+        //                      sh '''
+        //                          helmversion=$( helm show chart helm_fastfood_back | grep version | cut -d: -f 2 | tr -d ' ')
+        //                          tar -czvf  helm_fastfood_back-${helmversion}.tgz helm_fastfood_back/
+        //                          curl -u jenkins-user:$docker_password http://170.187.156.189:8081/repository/fastfood-helm-rep/ --upload-file helm_fastfood_back-${helmversion}.tgz -v
+        //                     '''
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
         stage("pushing the helm charts to nexus"){
             steps{
                 script{
                     withCredentials([string(credentialsId: 'nexus-pass', variable: 'docker_password')]) {
-                          dir('fastfood_backend/') {
+                       
                              sh '''
-                                 helmversion=$( helm show chart helm_fastfood_back | grep version | cut -d: -f 2 | tr -d ' ')
-                                 tar -czvf  helm_fastfood_back-${helmversion}.tgz helm_fastfood_back/
-                                 curl -u jenkins-user:$docker_password http://170.187.156.189:8081/repository/fastfood-helm-rep/ --upload-file helm_fastfood_back-${helmversion}.tgz -v
+                                 helmversion=$( helm show chart fastfoodapp | grep version | cut -d: -f 2 | tr -d ' ')
+                                 tar -czvf  fastfoodapp-${helmversion}.tgz fastfoodapp/
+                                 curl -u jenkins-user:$docker_password http://170.187.156.189:8081/repository/fastfood-helm-rep/ --upload-file fastfoodapp-${helmversion}.tgz -v
                             '''
-                          }
+                    
                     }
                 }
             }
-        }   
+        }
+        
+           
     }
 }
