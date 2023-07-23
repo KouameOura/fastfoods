@@ -14,10 +14,10 @@ pipeline {
         NEXUS_REPOSITORY = "utrains-nexus-pipeline"
         NEXUS_CREDENTIAL_ID = "nexus-user-credentials"
 
-        // imageName = "fastfood"
-        // registryCredentials = "nexus-user-credentials"
-        // registry = "139.177.192.139:8085/repository/utrains-nexus-registry/"
-        // dockerImage = ''
+        imageName = "fastfood"
+        registryCredentials = "nexus-user-credentials"
+        registry = "170.187.156.189:8085/repository/utrains-nexus-registry/"
+        dockerImage = ''
 
         //Declare the variable version
         POM_VERSION = ''
@@ -107,7 +107,7 @@ pipeline {
         stage("Build Docker Image"){
             steps{
                 echo 'Build Docker Image'
-                dir('./fastfood_backend/'){
+                dir('./fastfood_BackEnd/'){
                     script{
                         dockerImage = docker.build imageName
                     }
@@ -119,7 +119,7 @@ pipeline {
         stage("Uploading to Nexus Registry"){
             steps{
                 echo 'Uploading Docker image to Nexus ...'
-                dir('./fastfood_backend/'){
+                dir('./fastfood_BackEnd/'){
                     script{
                         pom = readMavenPom file: "pom.xml";
                         POM_VERSION = pom.version
